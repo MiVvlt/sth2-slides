@@ -153,6 +153,9 @@
                 <p class="fragment" data-fragment-index="0">Still express underneath</p>
                 <p class="fragment" data-fragment-index="1">Cleaner code (typescript decorators)</p>
                 <p class="fragment" data-fragment-index="2">Easier set-up</p>
+                <p class="fragment" data-fragment-index="3">Common (Modular) structure</p>
+                <p class="fragment" data-fragment-index="4">Guards, Sockets, Interceptors, ... </p>
+                <p class="fragment" data-fragment-index="5">Own custom decorators, (RoleGuard)</p>
             </section>
             <section>
                 <h2>NEST.js vs Express.js</h2>
@@ -166,18 +169,18 @@ export class LogAuthController {
     async getLogCount(): Promise&lt;number&gt; {
         return await this.logService.getLogCount();
     }
+}
 
-    // logs.service.ts
-    async getLogCount(): Promise&lt;number&gt; {
-        try {
-            return await this.logModel.count({});
-        } catch (error) {
-            throw new HttpException('Error getting logs', HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+// logs.service.ts
+async getLogCount(): Promise&lt;number&gt; {
+    try {
+        return await this.logModel.count({});
+    } catch (error) {
+        throw new HttpException('Error getting logs', HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
-</pre>
-                </code>
+                </code></pre>
+
             </section>
             <section>
                 <h2>Backend E2E Tests with Mockgoose</h2>
@@ -201,10 +204,11 @@ if (process.env.NODE_ENV === 'test') {
     });
 } else { // connect to the database normally }
                 </code></pre>
-                <p>and before, afterwards or in our tests, we can use
+
+                and before, afterwards or in our tests, we can use
                 <pre><code data-trim>mockgoose.helper.reset(callback)</code></pre>
                 to clear out all our collections.
-                </p>
+
             </section>
             <section>
                 <h2>Optimised the storage of our logs for more performance</h2>
@@ -359,7 +363,9 @@ let totalCountPromise = this.totalCountsModel.update( ... );
                 @ AXEL: YOUR SHIZZLE GOES HERE!
                 ********** -->
             </section>
-
+        </section>
+        <section>
+            <img src="img/kickass.gif" alt="" height="500px">
         </section>
 
         <!-- **********
