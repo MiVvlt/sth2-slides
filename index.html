@@ -3,18 +3,18 @@
 
 <head lang="en">
     <meta charset="UTF-8">
-    <title>JWorks - A base template</title>
+    <title>Stairway to Health 2 - Presentation</title>
     <link rel="stylesheet" href="css/reveal.css">
     <link rel="stylesheet" href="css/ordina.css" id="theme">
     <link rel="stylesheet" href="css/custom.css">
 
     <!-- Printing and PDF exports -->
     <script>
-        var link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
-        document.getElementsByTagName('head')[0].appendChild(link);
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
     </script>
 
     <script src="js/head.min.js"></script>
@@ -116,10 +116,14 @@
             <section>
                 <h2>What's new?</h2>
                 <ul>
-                    <li> New (and awesome) frontend design, <small style="padding-top: 13px;">with Ordina theming obviously</small></li>
+                    <li> New (and awesome) frontend design,
+                        <small style="padding-top: 13px;">with Ordina theming obviously</small>
+                    </li>
                     <li> Upgraded from Angular 4 to Angular 5</li>
                     <li> Material Design</li>
-                    <li> NEST.js in stead of Express.js <small style="padding-top: 13px;">(still Express underneath, but cleaner code!)</small></li>
+                    <li> NEST.js in stead of Express.js
+                        <small style="padding-top: 13px;">(still Express underneath, but cleaner code!)</small>
+                    </li>
                     <li> Eliminated 'callback hell' with async/await</li>
                     <li> Backend e2e tests with Mockgoose</li>
                     <li> Optimised the storage of our logs for more performance</li>
@@ -130,7 +134,8 @@
             </section>
             <section>
                 <h2>New (and awesome) frontend design</h2>
-                <a href="http://sth2-fe-prod-ordina-stairway-to-health.origin.ordina-jworks.io/dashboard" target="_blank">Stairway to Health 2.0</a>
+                <a href="http://sth2-fe-prod-ordina-stairway-to-health.origin.ordina-jworks.io/dashboard"
+                   target="_blank">Stairway to Health 2.0</a>
             </section>
             <section>
                 <h2>New Tech Stack</h2>
@@ -167,14 +172,16 @@ export class LogAuthController {
         }
     }
 }
-</pre></code>
+</pre>
+                </code>
             </section>
             <section>
                 <h2>Backend E2E Tests with Mockgoose</h2>
-                <p>Mockgoose is a wrapper for mongoose, that lets you connect to a non persistent database if you want to.</p>
+                <p>Mockgoose is a wrapper for mongoose, that lets you connect to a non persistent database if you want
+                    to.</p>
             </section>
             <section>
-                    <p>So in our database provider we can use something like the following:</p>
+                <p>So in our database provider we can use something like the following:</p>
 
                 <pre><code data-trim>
 if (process.env.NODE_ENV === 'test') {
@@ -190,10 +197,11 @@ if (process.env.NODE_ENV === 'test') {
     });
 } else { // connect to the database normally }
                 </code></pre>
-                    <p>and before, afterwards or in our tests, we can use <pre><code data-trim>mockgoose.helper.reset(callback)</code></pre>
-                    to clear out all our collections.
-                    </p>
-                </section>
+                <p>and before, afterwards or in our tests, we can use
+                <pre><code data-trim>mockgoose.helper.reset(callback)</code></pre>
+                to clear out all our collections.
+                </p>
+            </section>
             <section>
                 <h2>Optimised the storage of our logs for more performance</h2>
                 <p>With Stairway to Health 1, we use mongo aggregate's to group the data from our logs.</p>
@@ -203,7 +211,8 @@ if (process.env.NODE_ENV === 'test') {
             <section>
                 <h2>Solution</h2>
                 <p>More collections...</p>
-                <p>so in stead of calculating everytime we want the data, we update a collection that keeps track of the totals every time a log comes in.</p>
+                <p>so in stead of calculating everytime we want the data, we update a collection that keeps track of the
+                    totals every time a log comes in.</p>
             </section>
             <section>
                 <h2>Before</h2>
@@ -248,16 +257,17 @@ let dailyCountPromise = this.dailyCountsModel.update({
     $inc: {counts: item.numericValue}
 }, {upsert: true});
                 </code></pre>
-                <p  class="fragment" data-fragment-index="0">We do this for all chart types</p>
+                <p class="fragment" data-fragment-index="0">We do this for all chart types</p>
                 <pre class="fragment" data-fragment-index="0"><code data-trim>
 let weeklyCountPromise = this.weeklyCountsModel.update( ... );
 let monthlyCountPromise = this.monthlyCountsModel.update( ... );
 let yearlyCountPromise = this.yearlyCountsModel.update( ... );
 let totalCountPromise = this.totalCountsModel.update( ... );
                 </code></pre>
-                <small  class="fragment" data-fragment-index="1">since we put them in variables and don't await them, the code is not blocking,
-                all request to the database will be made one after the other, and we can still continue in our code.
-                With the variables, we can still do a Promise.all if we wanted to.
+                <small class="fragment" data-fragment-index="1">since we put them in variables and don't await them, the
+                    code is not blocking,
+                    all request to the database will be made one after the other, and we can still continue in our code.
+                    With the variables, we can still do a Promise.all if we wanted to.
                 </small>
                 <pre class="fragment" data-fragment-index="1"><code>Promise.all([weeklyCountPromise, monthlyCountPromise, ...])</code></pre>
 
@@ -277,8 +287,60 @@ let totalCountPromise = this.totalCountsModel.update( ... );
 }
                 </code></pre>
             </section>
+        </section>
+        <section>
+            <section data-background-color="#e68308">
+                <h2 style="color: #fff;">Deploying</h2>
+                <img src="img/openshift-logo.png" height="200" alt="">
+            </section>
             <section>
-
+                <h2>Why OpenShift</h2>
+                <ul>
+                    <li>Easy to set up (demo git repo to get started from)</li>
+                    <li>Scalable</li>
+                    <li>Easy deployment (Continuous Integration)</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Continuous Integration</h2>
+                <p>Continuous Integration (CI) is a development practice that requires developers to integrate
+                    code into a shared repository several times a day. Each check-in is then verified by an automated
+                    build, allowing teams to detect problems early.
+                </p>
+                <ul>
+                    <li>Say goodbye to long and tense integrations</li>
+                    <li>Catch issues early and nip them in the bud</li>
+                    <li>Spend less time debugging and more time adding features</li>
+                    <li>Stop waiting to find out if your code’s going to work</li>
+                    <li>Reduce integration problems allowing you to deliver software more rapidly</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Setup with git(hub)</h2>
+                <p>When creating the openshift application we get asked for a github url and optionally a branch</p>
+                <img src="img/github-url.png" alt="">
+                <p>Once created we get a Webhook URL from OpenShift, that we can then add to our repositories webhooks.</p>
+                <p>Whenever we push to the repository, the webhook gets triggered, and openshift starts a new build.</p>
+            </section>
+            <section>
+                <h2>Environments</h2>
+                <ul>
+                    <li>We've set up 2 environments, develop and production.</li>
+                    <li>Therefore we have linked both our master and develop branch to an OpenShift application.</li>
+                    <li>When we develop, we create a feature branch, once it runs and works locally, we merge it into
+                        develop.
+                    </li>
+                    <li>When merging in develop (and pushing to github), it gets deployed on our OpenShift dev
+                        application.
+                    </li>
+                    <li>Once the feature is ready and tested, we create a pull request to merge our develop branch into
+                        master
+                    </li>
+                    <li>Which triggers a deploy of our production environment</li>
+                </ul>
+            </section>
+            <section>
+                <img src="img/gitflow.png" alt="">
             </section>
         </section>
 
@@ -309,49 +371,49 @@ let totalCountPromise = this.totalCountsModel.update( ... );
 </div>
 <script src="js/reveal.js"></script>
 <script>
-    Reveal.initialize({
-        transition: 'convex',
-        dependencies: [
-            // Cross-browser shim that fully implements classList - https://github.com/eligrey/classList.js/
-            {
-                src: 'lib/js/classList.js',
-                condition: function () {
-                    return !document.body.classList;
-                }
-            },
-            // Interpret Markdown in <section> elements
-            {
-                src: 'plugin/markdown/marked.js',
-                condition: function () {
-                    return !!document.querySelector('[data-markdown]');
-                }
-            },
-            {
-                src: 'plugin/markdown/markdown.js',
-                condition: function () {
-                    return !!document.querySelector('[data-markdown]');
-                }
-            },
-            // Syntax highlight for <code> elements
-            {
-                src: 'plugin/highlight/highlight.js',
-                async: true,
-                callback: function () {
-                    hljs.initHighlightingOnLoad();
-                }
-            },
-            // Zoom in and out with Alt+click
-            {
-                src: 'plugin/zoom-js/zoom.js',
-                async: true
-            },
-            // Speaker notes
-            {
-                src: 'plugin/notes/notes.js',
-                async: true
-            }
-        ]
-    });
+	Reveal.initialize({
+		transition: 'convex',
+		dependencies: [
+			// Cross-browser shim that fully implements classList - https://github.com/eligrey/classList.js/
+			{
+				src: 'lib/js/classList.js',
+				condition: function () {
+					return !document.body.classList;
+				}
+			},
+			// Interpret Markdown in <section> elements
+			{
+				src: 'plugin/markdown/marked.js',
+				condition: function () {
+					return !!document.querySelector('[data-markdown]');
+				}
+			},
+			{
+				src: 'plugin/markdown/markdown.js',
+				condition: function () {
+					return !!document.querySelector('[data-markdown]');
+				}
+			},
+			// Syntax highlight for <code> elements
+			{
+				src: 'plugin/highlight/highlight.js',
+				async: true,
+				callback: function () {
+					hljs.initHighlightingOnLoad();
+				}
+			},
+			// Zoom in and out with Alt+click
+			{
+				src: 'plugin/zoom-js/zoom.js',
+				async: true
+			},
+			// Speaker notes
+			{
+				src: 'plugin/notes/notes.js',
+				async: true
+			}
+		]
+	});
 </script>
 </body>
 
