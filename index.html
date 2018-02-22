@@ -36,6 +36,44 @@
         <!-- Example of nested vertical slides -->
         <section>
             <section data-background-color="#e68308">
+                <h2 style="color: #fff;">Internet of Things</h2>
+            </section>
+            <section>
+                <img src="img/devicecontainers.jpg" height="500px" alt="">
+            </section>
+            <section>
+                <h2>Devices</h2>
+                <ul>
+                    <li>Microcontrollers</li>
+                    <ul>
+                        <li>Arduino</li>
+                        <li>ESP8266</li>
+                    </ul>
+                    <li>Mobile Devices</li>
+                    <li>PLC </li>
+                    <li>More...</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Sensors</h2>
+                <ul>
+                    <li>Temperature</li>
+                    <li>Humidity</li>
+                    <li>Infra Red</li>
+                    <li>Magnetic pulse</li>
+                    <li>Push button</li>
+                    <li>Many more...</li>
+                </ul>
+            </section>
+            <section>
+                <img src="img/connectivity.jpg" height="400px" alt="">
+            </section>
+            <section>
+                <img src="img/lora.jpg" height="600px">
+            </section>
+        </section>
+        <section>
+            <section data-background-color="#e68308">
                 <h2 style="color: #fff;">Quick Recap</h2>
             </section>
             <section>
@@ -281,6 +319,19 @@ let totalCountPromise = this.totalCountsModel.update( ... );
 
             </section>
             <section>
+                <h2>Result</h2>
+                <ul>
+                    <li class="fragment" data-fragment-index="1">less calculations: max (24 * entities) items vs. +- 2m
+                        and counting before
+                    </li>
+                    <li class="fragment" data-fragment-index="2">A lot faster: only 45-48ms (prod - 150k (*) logs) vs +-
+                        2s (local - 100k logs)
+                    </li>
+                    <li class="fragment" data-fragment-index="3">Decreased calculation time by 97.6%</li>
+                    <li class="fragment" data-fragment-index="4">Stable (doesn't matter if we have 50 or 50m logs)</li>
+                </ul>
+            </section>
+            <section>
                 <h2>Example Data DailyCounts</h2>
                 <pre><code data-trim>
 {
@@ -292,6 +343,37 @@ let totalCountPromise = this.totalCountsModel.update( ... );
   "hour": 22,
   "identifier": "20-12-2017",
   "counts": 55
+}
+                </code></pre>
+            </section>
+            <section>
+                <h2>Retrieving the data</h2>
+                <pre><code>
+switch (type) {
+    case 'DAY':
+        // Grouping per day, so we get all data ex. for date '01-01-2018' an sort them by '$hour'
+        id = `${d.getDate()}-${d.getMonthNumber()}-${d.getFullYear()}`;
+        sId = '$hour';
+        model = this.dailyCountsModel;
+        break;
+    case 'WEEK':
+        // Grouping per week, so we get all data ex. for week '1-2018' an sort them by '$day'
+        id = `${d.getWeekNumber()}-${d.getFullYear()}`;
+        sId = '$day';
+        model = this.weeklyCountsModel;
+        break;
+    case 'MONTH':
+        // Grouping per month, so we get all data ex. for week '01-2018' (jan) an sort them by '$week'
+        id = `${d.getMonthNumber()}-${d.getFullYear()}`;
+        sId = '$week';
+        model = this.monthlyCountsModel;
+        break;
+    case 'YEAR':
+        // Grouping per year, so we get all data ex. for year '2018' an sort them by '$month'
+        id = `${d.getFullYear()}`;
+        sId = '$month';
+        model = this.yearlyCountsModel;
+        break;
 }
                 </code></pre>
             </section>
@@ -327,7 +409,8 @@ let totalCountPromise = this.totalCountsModel.update( ... );
                 <h2>Setup with git(hub)</h2>
                 <p>When creating the openshift application we get asked for a github url and optionally a branch</p>
                 <img src="img/github-url.png" alt="">
-                <p>Once created we get a Webhook URL from OpenShift, that we can then add to our repositories webhooks.</p>
+                <p>Once created we get a Webhook URL from OpenShift, that we can then add to our repositories
+                    webhooks.</p>
                 <p>Whenever we push to the repository, the webhook gets triggered, and openshift starts a new build.</p>
             </section>
             <section>
